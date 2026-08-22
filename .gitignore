@@ -1,0 +1,31 @@
+# --- Secrets ---
+# Contains your API keys / config. Never commit this.
+.env
+*.env
+!.env.example
+
+# --- Python (backend) ---
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- User-uploaded data (privacy) ---
+# PDFs people upload and the vector embeddings derived from them.
+# These are personal/potentially sensitive files, not project code.
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+backend/data/chroma/*
+!backend/data/chroma/.gitkeep
+
+# --- Node / frontend ---
+node_modules/
+dist/
+frontend/.env
+*.tsbuildinfo
+
+# --- OS/editor noise ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
