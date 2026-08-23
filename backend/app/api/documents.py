@@ -3,7 +3,7 @@ Document endpoints: upload, list, status, delete.
 
 Processing is synchronous for V1 (per the "do not introduce Celery/Kafka
 yet" constraint) — the upload request extracts text before returning. This
-is fine for typical PDFs; Phase 3-5 will extend this same synchronous flow
+is fine for typical PDFs; will extend this same synchronous flow
 to also chunk, embed, and index before marking a document COMPLETED.
 """
 from pathlib import Path
@@ -73,8 +73,8 @@ async def upload_document(
     document_store.add(document)
     logger.info("Document uploaded: %s (%s)", document_id, safe_display_name)
 
-    # --- 3. Process: extract -> chunk -> embed -> index (Phase 2-5 pipeline,
-    #        all synchronous for V1). Any failure at any step marks the
+    # --- 3. Process: extract -> chunk -> embed -> index (all
+    #        synchronous for V1). Any failure at any step marks the
     #        document FAILED with a specific error_message. ---
     try:
         pages = pdf_service.extract_pages(str(file_path))

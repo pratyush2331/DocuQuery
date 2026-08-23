@@ -4,7 +4,7 @@ In-memory document store.
 For V1 we intentionally avoid adding Postgres/Mongo here (see the "do not
 overengineer" constraint) — a process-lifetime dict is enough to learn the
 RAG pipeline. The store also holds each document's extracted pages in
-memory so Phase 3 (chunking) can read them without re-parsing the PDF.
+memory so chunking can read them without re-parsing the PDF.
 
 Swapping this for a real database later only means reimplementing this
 one class — nothing in the API layer needs to change, since routes only

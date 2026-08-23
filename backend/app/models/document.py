@@ -21,7 +21,7 @@ class DocumentStatus(str, Enum):
 
 class PageContent(BaseModel):
     """Raw extracted text for a single PDF page. Produced by pdf_service,
-    consumed by the chunking service in Phase 3."""
+    consumed by the chunking service"""
 
     page_number: int
     text: str
@@ -30,7 +30,7 @@ class PageContent(BaseModel):
 class Document(BaseModel):
     """
     Internal representation of an uploaded document, held in the in-memory
-    DocumentStore. Phase 3-5 will attach chunk_count / indexed_at once
+    DocumentStore. Will attach chunk_count / indexed_at once
     chunking and embedding are implemented.
     """
 
