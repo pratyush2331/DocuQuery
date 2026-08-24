@@ -2,9 +2,9 @@
 
 A Retrieval-Augmented Generation (RAG) application that lets you upload a PDF and ask questions about it in natural language. Answers are grounded strictly in the document's content and come with page-level source citations, so every claim can be traced back to the exact text it came from.
 
-Runs entirely on local, open-source models via [Ollama](https://ollama.com) — no API costs, no external dependency on a paid LLM provider.
+Runs entirely on local, open-source models via [Hugging Face](https://Hugging Face.com) — no API costs, no external dependency on a paid LLM provider.
 
-**Stack:** FastAPI · React + TypeScript · ChromaDB · PyMuPDF · Ollama
+**Stack:** FastAPI · React + TypeScript · ChromaDB · PyMuPDF · Hugging Face
 
 ---
 
@@ -38,7 +38,7 @@ Nothing here is hidden behind a single framework call. Chunking, embedding, retr
                 ▼               ▼                ▼               ▼               ▼
          ┌─────────────┐ ┌─────────────┐  ┌──────────────┐ ┌────────────┐ ┌──────────────┐
          │ PDF Service │ │ Chunking Svc│  │ Embedding Svc│ │  ChromaDB  │ │  LLM Service │
-         │ (PyMuPDF)   │ │             │  │  (Ollama)    │ │(persisted) │ │  (Ollama)    │
+         │ (PyMuPDF)   │ │             │  │  (Hugging Face)    │ │(persisted) │ │  (Hugging Face)    │
          └─────────────┘ └─────────────┘  └──────────────┘ └────────────┘ └──────────────┘
 ```
 
@@ -87,7 +87,7 @@ DocuQuery/
 - **In-memory document store for V1.** No Postgres/Mongo — a process-lifetime store was enough to prove out the RAG pipeline without adding infrastructure that doesn't teach anything new. It's implemented behind a single class so swapping in a real database later doesn't touch the API layer.
 - **Per-page chunking, not cross-page.** Every chunk carries one unambiguous page number for citation purposes. Trade-off: a paragraph that straddles a page boundary can be split even with overlap enabled — a known, documented limitation rather than a silent one.
 - **Synchronous ingestion.** No Celery/Kafka/queue for V1 — deliberately avoided premature infrastructure. The pipeline is structured so async processing can be added later without a rewrite.
-- **Local models over a hosted API.** Chose Ollama specifically to keep the project fully self-contained and runnable without any billing dependency, while keeping the code path identical to what a hosted OpenAI-compatible API would use.
+- **Local models over a hosted API.** Chose Hugging Face specifically to keep the project fully self-contained and runnable without any billing dependency, while keeping the code path identical to what a hosted OpenAI-compatible API would use.
 
 ## Setup
 
@@ -95,13 +95,13 @@ DocuQuery/
 
 - Python 3.11+
 - Node.js 18+
-- [Ollama](https://ollama.com/download)
+- [Hugging Face](https://Hugging Face.com/download)
 
-### 1. Install Ollama and pull models
+### 1. Install Hugging Face and pull models
 
 ```bash
-ollama pull llama3.2
-ollama pull nomic-embed-text
+Hugging Face pull llama3.2
+Hugging Face pull nomic-embed-text
 ```
 
 `llama3.2` handles answer generation, `nomic-embed-text` handles embeddings. One-time download (~2.3GB total); runs fully offline afterward.
@@ -118,7 +118,7 @@ cp .env.example .env
 
 In `backend/.env`:
 ```
-OPENAI_API_KEY=ollama
+OPENAI_API_KEY=Hugging Face
 LLM_MODEL=llama3.2
 EMBEDDING_MODEL=nomic-embed-text
 ```
@@ -146,7 +146,7 @@ cd backend
 pytest tests/ -v
 ```
 
-26 tests, all AI calls mocked with a deterministic fake embedding function — the suite exercises real chunking, real ChromaDB storage/retrieval, and the full API layer without needing Ollama or any external service running.
+26 tests, all AI calls mocked with a deterministic fake embedding function — the suite exercises real chunking, real ChromaDB storage/retrieval, and the full API layer without needing Hugging Face or any external service running.
 
 ## API
 
@@ -163,7 +163,7 @@ pytest tests/ -v
 
 | Variable | Purpose |
 |---|---|
-| `LLM_MODEL` / `EMBEDDING_MODEL` | Which Ollama models to use |
+| `LLM_MODEL` / `EMBEDDING_MODEL` | Which Hugging Face models to use |
 | `CHUNK_SIZE` / `CHUNK_OVERLAP` | Chunking granularity and boundary overlap |
 | `TOP_K` | Number of chunks retrieved per query |
 | `CHROMA_PERSIST_DIRECTORY` | Where vector data is stored on disk |
