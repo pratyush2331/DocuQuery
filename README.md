@@ -36,10 +36,10 @@ Nothing here is hidden behind a single framework call. Chunking, embedding, retr
                                                  │
                 ┌───────────────┬────────────────┼───────────────┬───────────────┐
                 ▼               ▼                ▼               ▼               ▼
-         ┌─────────────┐ ┌─────────────┐  ┌──────────────┐ ┌────────────┐ ┌──────────────┐
-         │ PDF Service │ │ Chunking Svc│  │ Embedding Svc│ │  ChromaDB  │ │  LLM Service │
-         │ (PyMuPDF)   │ │             │  │  (Hugging Face)    │ │(persisted) │ │  (Hugging Face)    │
-         └─────────────┘ └─────────────┘  └──────────────┘ └────────────┘ └──────────────┘
+         ┌─────────────┐ ┌─────────────┐  ┌────────────────┐ ┌────────────┐ ┌────────────────┐
+         │ PDF Service │ │ Chunking Svc│  │ Embedding Svc  │ │  ChromaDB  │ │  LLM Service   │
+         │ (PyMuPDF)   │ │             │  │  (Hugging Face)│ │(persisted) │ │  (Hugging Face)│
+         └─────────────┘ └─────────────┘  └────────────────┘ └────────────┘ └────────────────┘
 ```
 
 The embedding and LLM services are thin wrappers around the OpenAI Python SDK pointed at a local `base_url`. Swapping providers (e.g. to OpenAI, or a hosted inference API) is a two-line change in two files — the rest of the application is provider-agnostic by design.
