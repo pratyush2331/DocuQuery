@@ -2,7 +2,7 @@
 
 A Retrieval-Augmented Generation (RAG) application that lets you upload a PDF and ask questions about it in natural language. Answers are grounded strictly in the document's content and come with page-level source citations, so every claim can be traced back to the exact text it came from.
 
-Runs entirely on local, open-source models via [Hugging Face](https://Hugging Face.com) — no API costs, no external dependency on a paid LLM provider.
+Runs entirely on local, open-source models via [Hugging Face](https://HuggingFace.com) — no API costs, no external dependency on a paid LLM provider.
 
 **Stack:** FastAPI · React + TypeScript · ChromaDB · PyMuPDF · Hugging Face
 
